@@ -53,46 +53,46 @@ class TestBase(TestBaseModel):
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.number_rooms, str)
+        self.assertIsInstance(Place.number_rooms, int)
 
     def test_num_bathrooms(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.number_bathrooms, str)
+        self.assertIsInstance(Place.number_bathrooms, int)
 
     def test_max_guest(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.max_guest, str)
+        self.assertIsInstance(Place.max_guest, int)
 
     def test_price_by_night(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.price_by_night, str)
+        self.assertIsInstance(Place.price_by_night, int)
 
     def test_longitude(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.longitude, str)
+        self.assertIsInstance(Place.longitude, float)
 
     def test_latitude(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.latitude, str)
+        self.assertIsInstance(Place.latitude, float)
 
     def test_amenity_id(self):
         '''
         Attribute test
         '''
         Place = self.test_class()
-        self.assertIsInstance(Place.amenity_ids, str)
+        self.assertIsInstance(Place.amenity_ids, list)
