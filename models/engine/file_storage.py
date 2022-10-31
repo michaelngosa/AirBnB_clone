@@ -7,19 +7,19 @@ import json
 from datetime import datetime
 
 
-class FilestSorage:
+class FileStorage:
     """
     FileStorage class
     """
 
-    __file_path = "JSONstorage.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
         """
         Return the dictionary
         """
-        return FilestSorage.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         '''
@@ -28,7 +28,7 @@ class FilestSorage:
         '''
 
         key = obj.to_dict()['__class__'] + "." + obj.id
-        FilestSorage.__objects.update({key: obj})
+        FileStorage.__objects.update({key: obj})
 
     def save(self):
         """
@@ -36,10 +36,10 @@ class FilestSorage:
         """
 
         my_dict = {}
-        my_dict.update(FilestSorage.__objects)
+        my_dict.update(FileStorage.__objects)
         for key, value in my_dict.items():
             my_dict[key] = value.to_dict()
-        with open(FilestSorage.__file_path, "w+") as write_file:
+        with open(FileStorage.__file_path, "w+") as write_file:
             json.dump(my_dict, write_file)
 
     def reload(self):
@@ -55,6 +55,6 @@ class FilestSorage:
             with open(self.__file_path, "r") as read_file:
                 new_dict = json.load(read_file)
                 for key, value in new_dict.items():
-                    FilestSorage.__objects[key] = BaseModel(**value)
+                    FileStorage.__objects[key] = BaseModel(**value)
         except IOError:
             pass
