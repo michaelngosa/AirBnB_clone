@@ -3,6 +3,12 @@
 the entry point of the command interpreter
 """
 import cmd
+from models.base_model import BaseModel
+from models.__init__ import storage
+from models.user import User
+
+Class_Dict = {"BaseModel": BaseModel,
+              "User": User}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -42,6 +48,52 @@ class HBNBCommand(cmd.Cmd):
         an empty line + ENTER shouldn’t execute anything
         """
         pass
+    
+    def do_create(self, args):
+        """
+        create new intance of BaseModel
+        """
+        if not args:
+            print('** class name missing **')
+            return
+        elif args in Class_Dict:
+            for key, value in Class_Dict.items():
+                if key == args:
+                    new_instance = Class_Dict[key]()
+                storage.save()
+                print(new_instance.id)
+        else:
+            print("** class doesn't exist **")
+
+    def help_create(self):
+        '''
+        Help for create
+        '''
+        print('Create command to create new instance\n')
+    
+    def do_show(self, args):
+        """
+        Print str repr of an instance
+        bases on class name and id
+        """
+        new_instance = args.partition(' ')
+        class_name = new_instance[0]
+        class_id = new_instance[2]
+        
+        if not args:
+            print('** class name missing **')
+            return
+        if class_name not in Class_Dict:
+            print("** class doesn't exist **")
+            return
+        if not class_id:
+            print('** instance id missing **')
+            return
+        new_key = class_name + "." + class_id
+        try:
+            print(storage._FileStorage__objects[new_key])
+        except BaseException:
+            print("** no instance found **")
 
 
 if __name__ == '__main__':
