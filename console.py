@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             new_key = class_name + '.' + class_id
             try:
-                del(storage._FileStorage__objects[new_key])
+                del (storage._FileStorage__objects[new_key])
                 storage.save()
             except KeyError:
                 print('** no instance found **')
