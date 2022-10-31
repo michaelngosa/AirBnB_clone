@@ -226,6 +226,65 @@ class HBNBCommand(cmd.Cmd):
         print("updates and objects with new information")
         print('update <class name> <id> <attribute name> "<attribute value>"')
 
+    def do_count(self, args):
+        """
+        count number of instances by class
+        """
+        counter = 0
+
+        new_arg = args.split(" ")
+        if new_arg[0] not in Class_Dict:
+            print("** class doesn't exist **")
+            return
+        new_list = storage._FileStorage__objects.items()
+        for key, value in new_list:
+            temp_key = str(key)
+            new_key = temp_key.split(".")
+            if new_key[0] == new_arg[0]:
+                counter = (counter + 1)
+        print(counter)
+
+    def help_count(self):
+        """
+        counts the number of instances of a class
+        """
+        print("count <class>")
+
+    def default(self, line):
+        '''
+        Advanced
+        '''
+        _cmd = storage.all()
+        if '.' in line:
+            cmd_parse = line.split('.')
+            class_name = cmd_parse[0]
+            method_name = cmd_parse[1]
+            if class_name in Class_Dict:
+                if method_name[0:5] == 'all()':
+                    self.do_all(class_name)
+                if method_name[0:7] == 'count()':
+                    self.do_count(class_name)
+                if method_name[0:5] == 'show(':
+                    method_name2 = method_name.split('"')
+                    show_id = method_name2[1]
+                    arg = class_name + ' ' + show_id
+                    print(arg)
+                    self.do_show(arg)
+                if method_name[0:8] == 'destroy(':
+                    method_name2 = method_name.split('"')
+                    show_id = method_name2[1]
+                    arg = class_name + ' ' + show_id
+                    self.do_destroy(arg)
+                if method_name[0:7] == 'update(':
+                    method_name2 = method_name.split('"')
+                    show_id = method_name2[1]
+                    show_att_name = method_name2[3]
+                    show_att_val = method_name2[5]
+                    arg = class_name + ' ' + show_id +\
+                        ' ' + show_att_name + ' ' + show_att_val
+                    print(arg)
+                    self.do_update(arg)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
