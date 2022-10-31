@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         an empty line + ENTER shouldn’t execute anything
         """
         pass
-    
+
     def do_create(self, args):
         """
         create new intance of BaseModel
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         Help for create
         '''
         print('Create command to create new instance\n')
-    
+
     def do_show(self, args):
         """
         Print str repr of an instance
@@ -79,7 +79,7 @@ class HBNBCommand(cmd.Cmd):
         new_instance = args.partition(' ')
         class_name = new_instance[0]
         class_id = new_instance[2]
-        
+
         if not args:
             print('** class name missing **')
             return
@@ -94,6 +94,119 @@ class HBNBCommand(cmd.Cmd):
             print(storage._FileStorage__objects[new_key])
         except BaseException:
             print("** no instance found **")
+
+    def do_destroy(self, args):
+        """
+        delete an instance base on class name and id
+        """
+        new_args = ""
+        class_name = ""
+        class_id = ""
+        try:
+            new_args = args.split(" ")
+            class_name = new_args[0]
+            class_id = new_args[1]
+        except BaseException:
+            pass
+        if not class_name:
+            print('** class name missing **')
+        elif class_name not in Class_Dict:
+            print("** class doesn't exist **")
+        elif not class_id:
+            print('** instance id missing **')
+        else:
+            new_key = class_name + '.' + class_id
+            try:
+                del(storage._FileStorage__objects[new_key])
+                storage.save()
+            except KeyError:
+                print('** no instance found **')
+
+    def help_destroy(self):
+        '''
+        Help for destroy
+        '''
+        print('Destroy command to show delete an instance based\
+        on class name and id\n')
+
+    def do_all(self, args):
+        """
+        print all instances based on class
+        """
+        new_list = []
+        if args:
+            if args not in Class_Dict:
+                print("** class doesn't exist **")
+                return
+            for key, value in storage._FileStorage__objects.items():
+                if key.split(".")[0] == args:
+                    new_list.append(str(value))
+        else:
+            for key, value in storage._FileStorage__objects.items():
+                new_list.append(str(value))
+        print(new_list)
+
+    def help_all(self):
+        """
+        display all instances [based on class if chosen]
+        """
+        print("displays all instances [based on the class if choosen]")
+        print("all [class]")
+
+    def do_update(self, args):
+        """
+        Updates an instance based on the class name and id by
+        adding or updating attribute (save the change into the JSON file)
+        """
+        class_name = ""
+        class_id = ""
+        new_object = ""
+        attr_name = ""
+        attr_val = ""
+        objects = ""
+        try:
+            new_object = args.split(" ")
+            class_name = new_object[0]
+            class_id = new_object[1]
+            attr_name = new_object[2]
+            attr_val = new_object[3]
+            objects = storage.FileStorage__objects.items()
+        except (IndexError, NameError):
+            pass
+        if not class_name:
+            print("** class name missing **")
+            return
+        if class_name not in Class_Dict:
+            print("** class doesn't exist **")
+            return
+        if not id:
+            print("** instance id missing **")
+            return
+        if not attr_name:
+            print("** attribute name missing **")
+            return
+        if not attr_val:
+            print("** value missing **")
+            return
+
+        new_key = class_name + "." + class_id
+        no_touchy = ["id", "created_at", "updated_at"]
+        for key, value in storage._FileStorage__objects.items():
+            if new_key not in no_touchy:
+                if new_key == key:
+                    setattr(value, attr_name, attr_val)
+                    new = value
+                    new.save()
+        print("** no instance found **")
+        if new_key not in storage._FileStorage__objects.keys():
+            print("** no instance found **")
+
+    def help_update(self):
+        """
+        help for update
+        """
+        print("updates and objects with new information")
+        print('update <class name> <id> <attribute name> "<attribute value>"')
 
 
 if __name__ == '__main__':
