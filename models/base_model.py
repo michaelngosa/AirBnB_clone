@@ -43,6 +43,12 @@ class BaseModel:
         self.updated_at = datetime.now()
         storage.save()
 
+    def __repr__(self):
+        """
+        returns string repr
+        """
+        return (self.__str__())
+
     def __str__(self):
         """
         string representation of BaseModel class

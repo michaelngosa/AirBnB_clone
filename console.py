@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
     HBNBCommand class
     """
 
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
     classes = {"BaseModel": BaseModel,
                "User": User,
                "Place": Place,
@@ -78,8 +78,8 @@ class HBNBCommand(cmd.Cmd):
             for key, value in Class_Dict.items():
                 if key == args:
                     new_instance = Class_Dict[key]()
-                storage.save()
-                print(new_instance.id)
+            storage.save()
+            print(new_instance.id)
         else:
             print("** class doesn't exist **")
 
@@ -124,6 +124,7 @@ class HBNBCommand(cmd.Cmd):
             new_args = args.split(" ")
             class_name = new_args[0]
             class_id = new_args[1]
+            class_id = class_id.strip('\"')
         except BaseException:
             pass
         if not class_name:
@@ -135,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             new_key = class_name + '.' + class_id
             try:
-                del (storage._FileStorage__objects[new_key])
+                del storage._FileStorage__objects[new_key]
                 storage.save()
             except KeyError:
                 print('** no instance found **')
