@@ -97,6 +97,7 @@ class HBNBCommand(cmd.Cmd):
         new_instance = args.partition(' ')
         class_name = new_instance[0]
         class_id = new_instance[2]
+        class_id = class_id.strip('\"')
 
         if not args:
             print('** class name missing **')
@@ -187,6 +188,7 @@ class HBNBCommand(cmd.Cmd):
             new_object = args.split(" ")
             class_name = new_object[0]
             class_id = new_object[1]
+            class_id = class_id.strip('\"')
             attr_name = new_object[2]
             attr_val = new_object[3]
             objects = storage.FileStorage__objects.items()
