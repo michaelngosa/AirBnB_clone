@@ -54,14 +54,14 @@ class BaseModel:
         string representation of BaseModel class
         """
         return '[{}] ({}) {}'.format(
-            type(self).__name__, self.id, self.__dict__)
+            self.__class__.__name__, self.id, self.__dict__)
 
     def to_dict(self):
         """
         dictionary containing all the key/values of __dict__
         """
-        my_dict = dict(self.__dict__)
+        my_dict = self.__dict__.copy()
         my_dict['created_at'] = self.created_at.isoformat()
         my_dict['updated_at'] = self.updated_at.isoformat()
-        my_dict['__class__'] = type(self).__name__
+        my_dict['__class__'] = self.__class__.__name__
         return my_dict
