@@ -4,7 +4,6 @@ Serialized instances to a JSON file and deserializes
 in JSON file to instances
 """
 import json
-from datetime import datetime
 
 
 class FileStorage:
@@ -19,7 +18,7 @@ class FileStorage:
         """
         Return the dictionary
         """
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         '''
@@ -36,10 +35,10 @@ class FileStorage:
         """
 
         my_dict = {}
-        my_dict.update(FileStorage.__objects)
+        my_dict.update(self.__objects)
         for key, value in my_dict.items():
             my_dict[key] = value.to_dict()
-        with open(FileStorage.__file_path, "w+") as write_file:
+        with open(self.__file_path, "w+") as write_file:
             json.dump(my_dict, write_file)
 
     def reload(self):
@@ -55,6 +54,6 @@ class FileStorage:
             with open(self.__file_path, "r") as read_file:
                 new_dict = json.load(read_file)
                 for key, value in new_dict.items():
-                    FileStorage.__objects[key] = BaseModel(**value)
+                    self.__objects[key] = BaseModel(**value)
         except IOError:
             pass
