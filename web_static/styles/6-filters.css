@@ -5,6 +5,7 @@
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	position: relative;
+	margin-bottom: 30px;
 }
 .container .filters button{
 	font-size: 18px;
@@ -44,6 +45,7 @@ button:hover {
 	display: none;
 	width: 100%;
 	border: 1px solid #DDDDDD;
+	background-color: #DDDDDD;
 	border-radius: 4px;
 	position: relative;
 	padding-bottom: 40px;
