@@ -292,4 +292,3 @@ Requirements:
        * styles/6-filters.css: for the filters style
        * styles/8-places.css: for the places style
 >>>>>>> 1ac3d2453c93c595adb3086b6968e47a8a4e02e5
-.....
